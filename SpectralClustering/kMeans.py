@@ -55,15 +55,8 @@ def kMeans(D, k, mu=None, eps=0.0001):
                 mu[i,:] = np.sum(C[i], axis=0) / len(C[i])
 
         # Check for convergence
-        check = np.linalg.norm(mu - prev_mu)
-        if check <= eps:
+        if np.linalg.norm(mu - prev_mu) <= eps:
             return C, labels, mu, iter
-
-        # Print update
-        #print("Iteration " + str(iter) + ":")
-        #for i in range(k):
-            #print("c_" + str(i) + ":" + str(C[i]) + "     mu_" + str(i) + ":" + str(mu[i,:]))
-        #print("||mu - mu_prev||:" + str(check) + "\n")    
 
         # Update iteration count
         iter += 1

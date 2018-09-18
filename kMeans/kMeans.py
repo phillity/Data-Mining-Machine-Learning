@@ -11,13 +11,14 @@ import numpy as np
 #   mu - kxd centroid matrix
 #   k - cluster count
 #   eps - convergence tolarence
-def kMeans(D, k, mu, eps=0.0001):
+def kMeans(D, k, mu=None, eps=0.0001):
     # Get dimensions of nxd D matrix
     n, d = D.shape 
 
     # If mu is not preset
-    if np.array_equal(mu,np.zeros((k,d))):
+    if mu is None:
         # Randomly intialize k centroids in kxd mu matrix
+        mu = np.zeros((k,d))
         mu_list = np.random.choice(n,size=k,replace=False)
         for i,id in enumerate(mu_list):
             mu[i,:] = D[id,:]
@@ -55,13 +56,7 @@ def kMeans(D, k, mu, eps=0.0001):
 
         # Check for convergence
         if np.linalg.norm(mu - prev_mu) <= eps:
-            return C, labels,  mu, iter
-
-        # Print update
-        #print("Iteration " + str(iter) + ":")
-        #for i in range(k):
-            #print("c_" + str(i) + ":" + str(C[i]) + "     mu_" + str(i) + ":" + str(mu[i,:]))
-        #print("||mu - mu_prev||:" + str(check) + "\n")    
+            return C, labels, mu, iter  
 
         # Update iteration count
         iter += 1
@@ -98,7 +93,7 @@ else:
 if len(D.shape) < 2:
     D = D.reshape((D.shape[0],1))
 
-# Read in k centroid count
+# Read in k cluster count
 k = int(sys.argv[2])
 
 # Read in mu centroid id list if given

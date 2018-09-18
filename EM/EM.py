@@ -123,7 +123,7 @@ else:
 if len(D.shape) < 2:
     D = D.reshape((D.shape[0],1))
 
-# Read in k centroid count
+# Read in k cluster count
 k = int(sys.argv[2])
 
 # Read in mu mean matrix if given
