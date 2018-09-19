@@ -53,8 +53,10 @@ def EM(D, k, mu, eps=0.0001):
 
             # Re-estimate cov
             cov[i][0] = np.zeros((d,d))
-            for j in range(n):
-                cov[i][0] = cov[i][0] + w[i,j] * (D[j,:] - mu[i,:]) @ (D[j,:] - mu[i,:]).T
+            for a in range(d):
+                for b in range(d):
+                    for j in range(n):
+                        cov[i][0][a][b] = cov[i][0][a][b] + w[i,j] * (D[j,a] - mu[i,a]) * (D[j,b] - mu[i,b])
             cov[i][0] = cov[i][0] / np.sum(w[i,:],axis=0)
 
             # Re-estimate priors
@@ -123,7 +125,7 @@ else:
 if len(D.shape) < 2:
     D = D.reshape((D.shape[0],1))
 
-# Read in k cluster count
+# Read in k centroid count
 k = int(sys.argv[2])
 
 # Read in mu mean matrix if given
