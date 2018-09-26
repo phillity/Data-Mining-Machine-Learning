@@ -48,9 +48,7 @@ def PCA(D, alpha=0.9, num_components=-1):
     v = v[:,:r+1]
 
     # Get reduced dimensionality data
-    A = np.zeros((n,r+1))
-    for i in range(n):
-        A[i,:] = (v.T @ Z[i,:]).T
+    A = D @ v
 
     return A
 
@@ -72,8 +70,6 @@ if sys.argv[1] == "iris.data.txt" or sys.argv[1] == "iris.txt":
     D = np.loadtxt(sys.argv[1],delimiter=',',usecols=(0,1,2,3))
 else:
     D = np.loadtxt(sys.argv[1],delimiter=',')
-if len(D.shape) < 2:
-    D = D.reshape((D.shape[0],1))
 
 # Read in num_components
 num_components =-1
